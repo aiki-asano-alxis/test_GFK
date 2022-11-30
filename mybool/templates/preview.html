@@ -25,10 +25,15 @@
     <nav aria-label="subfolder">
         <ol class="subfolder">
             {% for sub_directory in sub_directories %}
-            <ui class="btn active"><a title="subfolder" href="{% url 'previewsubfolder' current_directory sub_directory %}"><i class="fa fa-home"> {{subfolder}}</i></a></ui>
+            <ui class="btn active"><a title="subfolder" href="{% url 'preview' %}?current_directory={{current_directory}}&sub_directory={{sub_directory}}"><i class="fa fa-home"> {{sub_directory}}</i></a></ui>
+            <form action="{%url 'preview' %}" method="get">
+                <input type="text" id="folder" name="folder" placeholder="{{sub_directory}}">
+            </form>
             {% endfor %}
         </ol>
     </nav>
+
+
     <table>
 
     {{preview_df|safe}}

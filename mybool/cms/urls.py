@@ -4,5 +4,5 @@ urlpatterns = [
     #preview
     path('', views.preview, name='preview'),
 
-    path('previewsubfolder/<slug:subfolder>', views.previewsubfolder, name='previewsubfolder')
+    # path('previewsubfolder/<slug:subfolder>', views.previewsubfolder, name='previewsubfolder')
 ]
