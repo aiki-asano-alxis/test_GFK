@@ -11,24 +11,25 @@ import xml.etree.ElementTree as ET
 
 
 def preview(request):
+    base_dir='./media'
     current_directory = request.GET.get('current_directory')
     select_directory=request.GET.get('sub_directory')
     if current_directory is None:
-        current_directory = './media/'
-    print("\ncurren_directory: "+current_directory)
+        current_directory = './media'
+    print("curren_directory: "+current_directory)
     if select_directory is None:
-        select_directory=''
+        new_current_directory=current_directory
     else:
         select_directory=request.GET.get('sub_directory')
-    print("select_directory: "+select_directory)
-    # current_directory=current_directory+'\\'+select_directory
+        new_current_directory = current_directory + '/' + select_directory
+        new_current_directory=current_directory+'/'+select_directory
     # pprint(request.param['subfolder'])
-    print("newcurrent_directory: "+current_directory)
-    img_folder=current_directory
+    print("newcurrent_directory: "+new_current_directory)
+    img_folder=new_current_directory+'/'
     print("img_folder: "+img_folder)
     # フォルダ情報
     # p = pathlib.Path(current_directory+sub_directory)
-    p = pathlib.Path('./media')
+    p = pathlib.Path(new_current_directory)
     print(p)
     sub_directories = []
     for x in p.iterdir():
@@ -68,17 +69,10 @@ def preview(request):
     # list_png_DTF.append(['DATE','TIME','FILE NAME'])
     # print(list_png_DTF)
     for p in p_temp:
-        # print(p.name)
-        # print(type(p.name))
-        # print(p)
+
         DateTimeFile = p.name.split(None, 1)
-        # print(DateTimeFile[1])
-        DateTimeFile[1] = DateTimeFile[1].replace('_src.png', '')
-        # print(DateTimeFile[1])
         DateTimeFile.append(p.name)
-        # print(DateTimeFile)
         list_png_DTF.append(DateTimeFile)
-    # print(list_png_DTF)
     df_png = pd.DataFrame(list_png_DTF,
                           columns=['DATE', 'TIME', 'FILE NAME'])
 
@@ -99,11 +93,7 @@ def preview(request):
         #
         # findall() は、リストを返してしまうので注意
         # find だと face が複数あった時最初のfaceしか返さない
-        #
-        # print(root)
-        # print(root.attrib)
-        # print(node.attrib)
-        # lprint(node)
+
 
         count = 0
         for nd in node:
@@ -126,10 +116,7 @@ def preview(request):
             DTF.append(p19)
             DTF.append(size)
             DTF.append(image)
-            ###
-            ###
-            ###
-            # print(DTF)
+
             list_xml_DTF.append(DTF)
 
     df_xml = pd.DataFrame(list_xml_DTF,
